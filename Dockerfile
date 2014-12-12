@@ -6,4 +6,5 @@ ADD qemu-arm-static/qemu-arm-static /usr/bin/qemu-arm-static
 #RUN /usr/bin/qemu-arm-static /bin/sh -c 'echo Hello World !'
 #RUN sh -c 'echo Hello World !'
 #RUN echo Hello World !
-RUN /usr/bin/qemu-arm-static ls -la
+
+RUN /usr/bin/qemu-arm-static
