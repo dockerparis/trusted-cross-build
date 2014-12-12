@@ -10,4 +10,5 @@ ADD qemu-arm-static/qemu-arm-static /usr/bin/qemu-arm-static
 #RUN sh -c 'echo Hello World !'
 #RUN echo Hello World !
 
-RUN /usr/bin/qemu-arm-static /bin/sh -c 'uname'
+#RUN /usr/bin/qemu-arm-static /bin/sh -c 'uname'
+RUN /usr/bin/qemu-arm-static /bin/sh -c 'which uname'
