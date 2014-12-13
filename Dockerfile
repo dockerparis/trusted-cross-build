@@ -5,5 +5,5 @@ ADD wrapper/wrapper-i386 /bin/sh
 
 #RUN sh -c 'echo Hello World !'
 #RUN echo Hello World !
-RUN date
-RUN echo 42
+#RUN date
+#RUN echo 42
