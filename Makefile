@@ -1,9 +1,9 @@
 all: build
 
-build:  Dockerfile qemu-arm-static/qemu-arm-static wrapper/wrapper
+build:  Dockerfile qemu-arm-static/qemu-arm-static wrapper/wrapper-i386
 	docker build -t trusted-docker-build .
 
-wrapper/wrapper:
+wrapper/wrapper-i386:
 	make -C wrapper wrapper
 
 qemu-arm-static/qemu-arm-static:
