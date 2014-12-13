@@ -1,2 +1,8 @@
+wrapper:
+  build: wrapper
+
+qemu-arm-static:
+  build: qemu-arm-static
+
 poc:
   build: .
