@@ -1,8 +1,8 @@
 wrapper-i386: Dockerfile wrapper.go
 	docker build -t wrapper .
-	docker run wrapper true
-	$(eval CID := $(shell docker ps -lq))
-	docker cp $(CID):/go/bin tmp
+	docker run --name=wrapper-tmp wrapper true
+	docker cp wrapper-tmp:/go/bin tmp
+	docker rm wrapper-tmp
 	mv tmp/bin/* .
 	rm -rf tmp
 
