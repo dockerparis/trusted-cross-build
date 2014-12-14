@@ -66,6 +66,60 @@ binfmt-support = <3
     Removing intermediate container 98a74cf8c666
     Successfully built f68841337716
 
+Problem, the trusted-build server do not have binfmt-support
+
+Solution
+--------
+
+A Dockerfile contains rules that works directly on the filesystem (`FROM`, `ADD`, `COPY`, ...).
+The `RUN` command will try to run a shell script line in a container context, it will do this: `docker run $PARENT_CID /bin/sh -c "the shell script line"`.
+
+First proof-of-concept:
+- Add `qemu-arm-static` in the container
+- Replace the `/bin/sh` in the container (ADD) with a wrapper that will call "qemu-arm-static bash -c $@"
+
+It works for basic commands, but as soon as the wrapped binary do an `execve` syscall, the new child process won't be wrapped.
+
+It worked ([build](https://registry.hub.docker.com/u/moul/trusted-cross-build/build_id/29996/code/biomzg2rvphqzd6yygsw3th/)), There is some debug in the wrapper to see the command translation :
+
+    FROM armbuild/ubuntu:latest
+    ADD qemu-arm-static/qemu-arm-static /usr/bin/qemu-arm-static
+    ADD wrapper/wrapper-i386 /bin/sh
+    RUN sh -c 'echo Hello World !'
+    RUN echo Hello World !
+
+    Step 0 : FROM armbuild/ubuntu:latest
+    Pulling image (latest) from armbuild/ubuntu, endpoint: https://registry-1.docker.io/v1/ 7ae58afd9325
+    Download complete 7ae58afd9325
+    Download complete 7ae58afd9325
+    Status: Downloaded newer image for armbuild/ubuntu:latest
+    ---> 7ae58afd9325
+    Step 1 : ADD qemu-arm-static/qemu-arm-static /usr/bin/qemu-arm-static
+    ---> 42473d88d32c
+    Removing intermediate container 0f3bceb0d97d
+    Step 2 : ADD wrapper/wrapper-i386 /bin/sh
+    ---> 282501415bb5
+    Removing intermediate container 8b6e49b9dfef
+    Step 3 : RUN sh -c 'echo Hello World !'
+    ---> Running in 3c9ef504d119
+    x86_64
+    [/bin/sh -c sh -c 'echo Hello World !']
+    [/usr/bin/qemu-arm-static /bin/bash -c sh -c 'echo Hello World !']
+    x86_64
+    [sh -c echo Hello World !]
+    [/usr/bin/qemu-arm-static /bin/bash -c echo Hello World !]
+    Hello World !
+    ---> c78a80ae1416
+    Removing intermediate container 3c9ef504d119
+    Step 4 : RUN echo Hello World !
+    ---> Running in f1598a5e6d6a
+    x86_64
+    [/bin/sh -c echo Hello World !]
+    [/usr/bin/qemu-arm-static /bin/bash -c echo Hello World !]
+    Hello World !
+    ---> 1f7b6cf626b5
+
+
 Author
 ------
 
