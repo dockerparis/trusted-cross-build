@@ -43,8 +43,8 @@ func main() {
        return
     }
 
-    os.Remove("/bin/sh")
-    os.Symlink("/bin/bash", "/bin/sh")
+    //os.Remove("/bin/sh")
+    //os.Symlink("/bin/bash", "/bin/sh")
 
     /*
     uts, _ := uname()
@@ -67,10 +67,17 @@ func main() {
       fmt.Println(args)
     }
     env := os.Environ()
+    os.Setenv("LD_PRELOAD", "/bin/ld_wrapper.so")
+
+    fmt.Println("exec")
+
     execErr := syscall.Exec(binary, args, env)
     if execErr != nil {
         panic(execErr)
     }
-    os.Remove("/bin/sh")
-    os.Symlink("/bin/wrapper", "/bin/sh")
+
+    fmt.Println("Cleaning")
+
+    //os.Remove("/bin/sh")
+    //os.Symlink("/bin/wrapper", "/bin/sh")
 }
