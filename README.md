@@ -119,6 +119,24 @@ It worked ([build](https://registry.hub.docker.com/u/moul/trusted-cross-build/bu
     Hello World !
     ---> 1f7b6cf626b5
 
+But as soon as we have an execve, it breaks ([build](https://registry.hub.docker.com/u/moul/trusted-cross-build/build_id/29996/code/bm8ck9q56mqugabcaxxwcmi/)):
+
+    FROM armbuild/ubuntu:latest
+    ADD qemu-arm-static/qemu-arm-static /usr/bin/qemu-arm-static
+    ADD wrapper/wrapper-i386 /bin/sh
+    RUN date
+
+    Step 0 : FROM armbuild/ubuntu:latest
+    Pulling image (latest) from armbuild/ubuntu, endpoint: https://registry-1.docker.io/v1/ 7ae58afd9325
+    [...]
+    Step 5 : RUN date
+    ---> Running in 1abb5e69e50b
+    x86_64
+    [/bin/sh -c date]
+    [/usr/bin/qemu-arm-static /bin/bash -c date]
+    [91m/bin/bash: /bin/date: cannot execute binary file: Exec format error
+    [0m
+    The command [/bin/sh -c date] returned a non-zero code: 126
 
 Author
 ------
