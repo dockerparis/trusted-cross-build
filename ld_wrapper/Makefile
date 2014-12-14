@@ -1,4 +1,4 @@
-build: ld_wrapper.so Dockerfile
+build: ld_wrapper.so
 
 ld_wrapper.so: ld_wrapper.c
 	docker build -t gcc-arm .

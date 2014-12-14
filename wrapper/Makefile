@@ -1,4 +1,6 @@
-wrapper-i386: Dockerfile wrapper.go
+build:	wrapper-i386
+
+wrapper-i386:	Dockerfile wrapper.go
 	docker build -t wrapper .
 	docker run --name=wrapper-tmp wrapper true
 	docker cp wrapper-tmp:/go/bin tmp

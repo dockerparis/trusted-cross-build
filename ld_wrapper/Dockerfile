@@ -6,4 +6,4 @@ WORKDIR /build/
 ENV gcc /usr/bin/arm-linux-gnueabihf-gcc-4.8
 
 RUN $gcc -c -Wall -Werror -fpic ld_wrapper.c
-RUN $gcc -shared -o ld_wrapper.so ld_wrapper.o
+RUN $gcc -o ld_wrapper.so -shared ld_wrapper.o -ldl
