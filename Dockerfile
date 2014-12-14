@@ -7,4 +7,5 @@ RUN sh -c 'echo Hello World !'
 RUN echo Hello World !
 #RUN date
 
-CMD ["bash"]
+#CMD ["/bin/sh", "-c", "ls -la"]
+CMD ["/bin/wrapper"]
