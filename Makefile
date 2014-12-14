@@ -1,4 +1,4 @@
-all: build
+all:	build
 
 build:  Dockerfile qemu-arm-static/qemu-arm-static ld_wrapper/ld_wrapper.so wrapper/wrapper-i386
 	docker build -t trusted-docker-build .
@@ -12,5 +12,10 @@ ld_wrapper/ld_wrapper.so: ld_wrapper/ld_wrapper.c
 qemu-arm-static/qemu-arm-static: qemu-arm-static/Dockerfile
 	make -C qemu-arm-static
 
-run: build
+run:	build
 	docker run -it --rm trusted-docker-build
+
+clean:
+	make -C wrapper clean
+	make -C qemu-arm-static clean
+	make -C ld_wrapper clean

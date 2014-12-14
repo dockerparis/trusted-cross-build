@@ -6,3 +6,5 @@ qemu-arm-static: Dockerfile
 	mv tmp/qemu-arm-static qemu-arm-static
 	rmdir tmp
 
+clean:
+	rm -f qemu-arm-static

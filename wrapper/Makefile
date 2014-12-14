@@ -6,3 +6,5 @@ wrapper-i386: Dockerfile wrapper.go
 	mv tmp/bin/* .
 	rm -rf tmp
 
+clean:
+	rm -f wrapper-i386 wrapper-armel wrapper-armhf wrapper-amd64
