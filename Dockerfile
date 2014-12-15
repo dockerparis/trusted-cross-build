@@ -13,14 +13,11 @@ RUN sh -c 'echo Hello World !'
 RUN echo Hello World !
 RUN echo Hello World !
 RUN echo Hello World !
-#RUN /bin/wrapper /bin/date
 RUN date
-#RUN /bin/date
-#RUN /bin/wrapper /bin/date
-#RUN date
-#RUN /bin/sh -c /bin/date
+RUN /bin/date
+RUN /bin/bash -c /bin/date
+RUN /bin/sh -c /bin/date
 #RUN apt-get install -y cowsay
-#RUN date
 #CMD ["/bin/sh", "-c", "ls -la"]
 CMD ["/usr/bin/qemu-arm-static", "/bin/bash"]
 
