@@ -16,7 +16,7 @@ qemu-arm-static/qemu-arm-static: qemu-arm-static/Dockerfile
 	make -C qemu-arm-static build
 
 run:	build
-	docker run -it --rm trusted-docker-build
+	docker run -it --rm trusted-docker-build /usr/bin/qemu-arm-static /bin/bash
 
 clean:
 	make -C wrapper clean

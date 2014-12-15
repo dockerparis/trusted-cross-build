@@ -23,3 +23,6 @@ RUN sh -c /bin/date
 CMD ["bash"]
 
 # CLEAN IMAGE
+# FIXME: clean the /bin/sh (we should add an option to the wrapper that will take care of this
+# RUN env --unset=PATH
+ENV PATH /bin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:/sbin
