@@ -1,4 +1,4 @@
-BINS = /bin/sh /bin/bash /bin/ls /bin/ln /bin/chmod /bin/echo /bin/cp /bin/cat
+BINS = /bin/sh /bin/bash /bin/ls /bin/ln /bin/chmod /bin/echo /bin/cp /bin/cat /usr/bin/apt-get
 
 all:
 	for bin in $(BINS); do \

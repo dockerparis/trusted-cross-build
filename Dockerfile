@@ -16,9 +16,10 @@ RUN echo Hello World !
 RUN date
 RUN /bin/date
 RUN /bin/bash -c /bin/date
+RUN bash -c /bin/date
 RUN /bin/sh -c /bin/date
-#RUN apt-get install -y cowsay
-#CMD ["/bin/sh", "-c", "ls -la"]
-CMD ["/usr/bin/qemu-arm-static", "/bin/bash"]
+RUN sh -c /bin/date
+# RUN apt-get install -y cowsay # -> failing with: Failed to exec method /usr/lib/apt/methods/http
+CMD ["bash"]
 
 # CLEAN IMAGE
