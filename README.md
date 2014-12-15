@@ -1,7 +1,11 @@
 Trusted cross build
 ===================
 
+**The author is a jury member, this project is out of the hackathon**
+
 Cross compilation image tools for Docker trusted build (POC)
+
+The goal was to mimic the `binfmt-support` of the Kernel in a Dockerfile
 
 Context
 -------
