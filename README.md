@@ -137,7 +137,7 @@ But as soon as we have an execve, it breaks ([build](https://registry.hub.docker
     [91m/bin/bash: /bin/date: cannot execute binary file: Exec format error
     [0m
     The command [/bin/sh -c date] returned a non-zero code: 126
-    
+
 Second Proof-of-concept ([build](https://registry.hub.docker.com/u/moul/trusted-cross-build/build_id/29996/code/bj3ref9df6a6dmzdeznnkrf/)):
 
 The wrapper looks like `busybox`, we have a symlink pointing to the wrapper for each binaries we will want to run.
@@ -167,127 +167,127 @@ It works for more cases, but we need to prefix each binaries, this solution can 
     RUN sh -c /bin/date
     # RUN apt-get install -y cowsay # -> failing with: Failed to exec method /usr/lib/apt/methods/http
     CMD ["bash"]
-    
-    Step 0 : FROM armbuild/ubuntu:latest 
+
+    Step 0 : FROM armbuild/ubuntu:latest
     Pulling image (latest) from armbuild/ubuntu, endpoint: https://registry-1.docker.io/v1/ 7ae58afd9325
     Download complete 7ae58afd9325
     Download complete 7ae58afd9325
-    Status: Downloaded newer image for armbuild/ubuntu:latest 
-    ---> 7ae58afd9325 
-    Step 1 : ADD qemu-arm-static/qemu-arm-static /usr/bin/qemu-arm-static 
-    ---> 6ac9a3150cdb 
-    Removing intermediate container c20f488e0e5f 
-    Step 2 : ADD wrapper/wrapper-i386 /bin/sh 
-    ---> 3c51e8c14252 
-    Removing intermediate container 9246489850a9 
-    Step 3 : ADD ld_wrapper/ld_wrapper.so /bin/ld_wrapper.so 
-    ---> 8018ef2e3f38 
-    Removing intermediate container 198ddb4d1123 
-    Step 4 : ADD binproxy /binproxy 
-    ---> 12534e9daba7 
-    Removing intermediate container 492797f2e2de 
-    Step 5 : ENV PATH /binproxy 
-    ---> Running in cc1a8cdea8d3 
-    ---> 9da10af1a80e 
-    Removing intermediate container cc1a8cdea8d3 
-    Step 6 : RUN sh -c 'echo Hello World !' 
-    ---> Running in bbeb0f5d3baa 
-    no such file or directory: /bin/wrapper 
-    ---> 29ad7ad4c922 
-    Removing intermediate container bbeb0f5d3baa 
-    Step 7 : RUN echo Hello World ! 
-    ---> Running in 5859091b1fd3 
-    Input args:  [/bin/sh -c echo Hello World !] 
-    Output args: [/usr/bin/qemu-arm-static /bin/bash -c echo Hello World !] 
-    Hello World ! 
-    ---> 596b77bc9865 
-    Removing intermediate container 5859091b1fd3 
-    Step 8 : RUN echo Hello World ! 
-    ---> Running in 9df4301aeb4e 
-    Input args:  [/bin/sh -c echo Hello World !] 
-    Output args: [/usr/bin/qemu-arm-static /bin/bash -c echo Hello World !] 
-    Hello World ! 
-    ---> 5aace60cbe09 
-    Removing intermediate container 9df4301aeb4e 
-    Step 9 : RUN echo Hello World ! 
-    ---> Running in c8ad5d2829f7 
-    Input args:  [/bin/sh -c echo Hello World !] 
-    Output args: [/usr/bin/qemu-arm-static /bin/bash -c echo Hello World !] 
-    Hello World ! 
-    ---> 92462ed30bdf 
-    Removing intermediate container c8ad5d2829f7 
-    Step 10 : RUN date 
-    ---> Running in 5d698660eb0b 
-    Input args:  [/bin/sh -c date] 
-    Output args: [/usr/bin/qemu-arm-static /bin/bash -c date] 
-    Input args:  [date] 
-    Output args: [/usr/bin/qemu-arm-static /bin/date] 
-    Mon Dec 15 07:36:55 UTC 2014 
-    ---> 41744084d1fd 
-    Removing intermediate container 5d698660eb0b 
-    Step 11 : RUN /bin/date 
-    ---> Running in 081b67fe5025 
-    Input args:  [/bin/sh -c /bin/date] 
-    Output args: [/usr/bin/qemu-arm-static /bin/bash -c /binproxy/date] 
-    Input args:  [/binproxy/date] 
-    Output args: [/usr/bin/qemu-arm-static /bin/date] 
-    Mon Dec 15 07:36:57 UTC 2014 
-    ---> 599c2f87ad48 
-    Removing intermediate container 081b67fe5025 
-    Step 12 : RUN /bin/bash -c /bin/date 
-    ---> Running in 5d99ee0c13df 
-    Input args:  [/bin/sh -c /bin/bash -c /bin/date] 
-    Output args: [/usr/bin/qemu-arm-static /bin/bash -c /binproxy/bash -c /binproxy/date] 
-    Input args:  [/binproxy/bash -c /binproxy/date] 
-    Output args: [/usr/bin/qemu-arm-static /bin/bash -c /binproxy/date] 
+    Status: Downloaded newer image for armbuild/ubuntu:latest
+    ---> 7ae58afd9325
+    Step 1 : ADD qemu-arm-static/qemu-arm-static /usr/bin/qemu-arm-static
+    ---> 6ac9a3150cdb
+    Removing intermediate container c20f488e0e5f
+    Step 2 : ADD wrapper/wrapper-i386 /bin/sh
+    ---> 3c51e8c14252
+    Removing intermediate container 9246489850a9
+    Step 3 : ADD ld_wrapper/ld_wrapper.so /bin/ld_wrapper.so
+    ---> 8018ef2e3f38
+    Removing intermediate container 198ddb4d1123
+    Step 4 : ADD binproxy /binproxy
+    ---> 12534e9daba7
+    Removing intermediate container 492797f2e2de
+    Step 5 : ENV PATH /binproxy
+    ---> Running in cc1a8cdea8d3
+    ---> 9da10af1a80e
+    Removing intermediate container cc1a8cdea8d3
+    Step 6 : RUN sh -c 'echo Hello World !'
+    ---> Running in bbeb0f5d3baa
+    no such file or directory: /bin/wrapper
+    ---> 29ad7ad4c922
+    Removing intermediate container bbeb0f5d3baa
+    Step 7 : RUN echo Hello World !
+    ---> Running in 5859091b1fd3
+    Input args:  [/bin/sh -c echo Hello World !]
+    Output args: [/usr/bin/qemu-arm-static /bin/bash -c echo Hello World !]
+    Hello World !
+    ---> 596b77bc9865
+    Removing intermediate container 5859091b1fd3
+    Step 8 : RUN echo Hello World !
+    ---> Running in 9df4301aeb4e
+    Input args:  [/bin/sh -c echo Hello World !]
+    Output args: [/usr/bin/qemu-arm-static /bin/bash -c echo Hello World !]
+    Hello World !
+    ---> 5aace60cbe09
+    Removing intermediate container 9df4301aeb4e
+    Step 9 : RUN echo Hello World !
+    ---> Running in c8ad5d2829f7
+    Input args:  [/bin/sh -c echo Hello World !]
+    Output args: [/usr/bin/qemu-arm-static /bin/bash -c echo Hello World !]
+    Hello World !
+    ---> 92462ed30bdf
+    Removing intermediate container c8ad5d2829f7
+    Step 10 : RUN date
+    ---> Running in 5d698660eb0b
+    Input args:  [/bin/sh -c date]
+    Output args: [/usr/bin/qemu-arm-static /bin/bash -c date]
+    Input args:  [date]
+    Output args: [/usr/bin/qemu-arm-static /bin/date]
+    Mon Dec 15 07:36:55 UTC 2014
+    ---> 41744084d1fd
+    Removing intermediate container 5d698660eb0b
+    Step 11 : RUN /bin/date
+    ---> Running in 081b67fe5025
+    Input args:  [/bin/sh -c /bin/date]
+    Output args: [/usr/bin/qemu-arm-static /bin/bash -c /binproxy/date]
     Input args:  [/binproxy/date]
-    Output args: [/usr/bin/qemu-arm-static /bin/date] 
-    Mon Dec 15 07:36:59 UTC 2014 
-    ---> 1e9eaf4d5fde 
-    Removing intermediate container 5d99ee0c13df 
-    Step 13 : RUN bash -c /bin/date 
-    ---> Running in 17b7dd5043c8 
-    Input args:  [/bin/sh -c bash -c /bin/date] 
-    Output args: [/usr/bin/qemu-arm-static /bin/bash -c bash -c /binproxy/date] 
-    Input args:  [bash -c /binproxy/date] 
-    Output args: [/usr/bin/qemu-arm-static /bin/bash -c /binproxy/date] 
+    Output args: [/usr/bin/qemu-arm-static /bin/date]
+    Mon Dec 15 07:36:57 UTC 2014
+    ---> 599c2f87ad48
+    Removing intermediate container 081b67fe5025
+    Step 12 : RUN /bin/bash -c /bin/date
+    ---> Running in 5d99ee0c13df
+    Input args:  [/bin/sh -c /bin/bash -c /bin/date]
+    Output args: [/usr/bin/qemu-arm-static /bin/bash -c /binproxy/bash -c /binproxy/date]
+    Input args:  [/binproxy/bash -c /binproxy/date]
+    Output args: [/usr/bin/qemu-arm-static /bin/bash -c /binproxy/date]
     Input args:  [/binproxy/date]
-    Output args: [/usr/bin/qemu-arm-static /bin/date] 
-    Mon Dec 15 07:37:01 UTC 2014 
-    ---> 1a71f497a34f 
-    Removing intermediate container 17b7dd5043c8 
-    Step 14 : RUN /bin/sh -c /bin/date 
-    ---> Running in ba2bce255960 
-    Input args:  [/bin/sh -c /bin/sh -c /bin/date] 
-    Output args: [/usr/bin/qemu-arm-static /bin/bash -c /binproxy/sh -c /binproxy/date] 
-    Input args:  [/binproxy/sh -c /binproxy/date] 
-    Output args: [/usr/bin/qemu-arm-static /bin/bash -c /binproxy/date] 
-    Input args:  [/binproxy/date] 
-    Output args: [/usr/bin/qemu-arm-static /bin/date] 
-    Mon Dec 15 07:37:03 UTC 2014 
-    ---> fc0b7dc8a8c2 
-    Removing intermediate container ba2bce255960 
-    Step 15 : RUN sh -c /bin/date 
-    ---> Running in 579c2effea5c 
-    Input args:  [/bin/sh -c sh -c /bin/date] 
-    Output args: [/usr/bin/qemu-arm-static /bin/bash -c sh -c /binproxy/date] 
-    Input args:  [sh -c /binproxy/date] 
-    Output args: [/usr/bin/qemu-arm-static /bin/bash -c /binproxy/date] 
+    Output args: [/usr/bin/qemu-arm-static /bin/date]
+    Mon Dec 15 07:36:59 UTC 2014
+    ---> 1e9eaf4d5fde
+    Removing intermediate container 5d99ee0c13df
+    Step 13 : RUN bash -c /bin/date
+    ---> Running in 17b7dd5043c8
+    Input args:  [/bin/sh -c bash -c /bin/date]
+    Output args: [/usr/bin/qemu-arm-static /bin/bash -c bash -c /binproxy/date]
+    Input args:  [bash -c /binproxy/date]
+    Output args: [/usr/bin/qemu-arm-static /bin/bash -c /binproxy/date]
     Input args:  [/binproxy/date]
-    Output args: [/usr/bin/qemu-arm-static /bin/date] 
-    Mon Dec 15 07:37:05 UTC 2014 
-    ---> 36ab144cbf99 
-    Removing intermediate container 579c2effea5c 
-    Step 16 : CMD bash 
-    ---> Running in 8e23dde8cfae 
-    ---> 0afaa5c20659 
-    Removing intermediate container 8e23dde8cfae 
-    Successfully built 0afaa5c20659 
+    Output args: [/usr/bin/qemu-arm-static /bin/date]
+    Mon Dec 15 07:37:01 UTC 2014
+    ---> 1a71f497a34f
+    Removing intermediate container 17b7dd5043c8
+    Step 14 : RUN /bin/sh -c /bin/date
+    ---> Running in ba2bce255960
+    Input args:  [/bin/sh -c /bin/sh -c /bin/date]
+    Output args: [/usr/bin/qemu-arm-static /bin/bash -c /binproxy/sh -c /binproxy/date]
+    Input args:  [/binproxy/sh -c /binproxy/date]
+    Output args: [/usr/bin/qemu-arm-static /bin/bash -c /binproxy/date]
+    Input args:  [/binproxy/date]
+    Output args: [/usr/bin/qemu-arm-static /bin/date]
+    Mon Dec 15 07:37:03 UTC 2014
+    ---> fc0b7dc8a8c2
+    Removing intermediate container ba2bce255960
+    Step 15 : RUN sh -c /bin/date
+    ---> Running in 579c2effea5c
+    Input args:  [/bin/sh -c sh -c /bin/date]
+    Output args: [/usr/bin/qemu-arm-static /bin/bash -c sh -c /binproxy/date]
+    Input args:  [sh -c /binproxy/date]
+    Output args: [/usr/bin/qemu-arm-static /bin/bash -c /binproxy/date]
+    Input args:  [/binproxy/date]
+    Output args: [/usr/bin/qemu-arm-static /bin/date]
+    Mon Dec 15 07:37:05 UTC 2014
+    ---> 36ab144cbf99
+    Removing intermediate container 579c2effea5c
+    Step 16 : CMD bash
+    ---> Running in 8e23dde8cfae
+    ---> 0afaa5c20659
+    Removing intermediate container 8e23dde8cfae
+    Successfully built 0afaa5c20659
 
 Evolution
 ---------
 
-I began a third proof-of-concept that uses a dynamic library that will be `LD_PRELOAD`ed and hot prefix the `execve` calls.
+A third proof-of-concept that uses a dynamic library that will be `LD_PRELOAD`ed and hot prefix the `execve` calls.
 
 So we should have :
 
@@ -296,6 +296,13 @@ So we should have :
 - /bin/sh wrapper: i386 binary that will call the targeted binary with `qemu-arm-static` **and** set the `$LD_PRELOAD` environment variable for all the children processes
 
 I think this solution should be better than the last one; Maybe for the next hackaton :)
+
+---
+
+Better clean and packaging of this hack, something like :
+
+- add a "ADD http://j.mp/install-qemu-arm-hack.tar /hack" just after the `FROM ...`
+- add a "RUN /hack/clean" at the end of the Dockerfile
 
 Author
 ------
