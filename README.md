@@ -284,6 +284,15 @@ It works for more cases, but we need to prefix each binaries, this solution can 
     Removing intermediate container 8e23dde8cfae
     Successfully built 0afaa5c20659
 
+And the essential, it runs on an armhf machine
+
+    root@devbox-image-tools-docker-builder:~# uname -a
+    Linux devbox-image-tools-docker-builder 3.17.0-119 #1 SMP Thu Nov 20 14:15:44 CET 2014 armv7l armv7l armv7l GNU/Linux
+    root@devbox-image-tools-docker-builder:~# docker run -it --rm moul/trusted-cross-build /bin/bash
+    root@0a2a778ad62c:/# uname -a
+    Linux 0a2a778ad62c 3.17.0-119 #1 SMP Thu Nov 20 14:15:44 CET 2014 armv7l armv7l armv7l GNU/Linux
+    root@0a2a778ad62c:/#
+
 Evolution
 ---------
 
