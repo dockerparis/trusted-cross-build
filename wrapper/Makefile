@@ -5,6 +5,7 @@ wrapper-i386:	Dockerfile wrapper.go
 	docker run --name=wrapper-tmp wrapper true
 	docker cp wrapper-tmp:/go/bin tmp
 	docker rm wrapper-tmp
+	touch tmp/bin/*
 	mv tmp/bin/* .
 	rm -rf tmp
 

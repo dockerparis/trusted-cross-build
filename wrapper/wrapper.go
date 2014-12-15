@@ -27,7 +27,7 @@ func main() {
 
     filename := "/bin/wrapper"
     if _, err := os.Stat(filename); os.IsNotExist(err) {
-       fmt.Printf("no such file or directory: %s", filename)
+       fmt.Printf("no such file or directory: %s\n", filename)
 
        err :=  os.Rename("/bin/sh", filename)
        if err != nil {
@@ -49,30 +49,37 @@ func main() {
     /*
     uts, _ := uname()
     Machine := ""
-    for _, c := range uts.Machine { 
-        if c == 0 { 
-            break 
-        } 
-        Machine += string(byte(c)) 
-    } 
+    for _, c := range uts.Machine {
+        if c == 0 {
+            break
+        }
+        Machine += string(byte(c))
+    }
     fmt.Println(Machine)
     */
 
     binary := "/usr/bin/qemu-arm-static"
     fmt.Println(args)
-    if len(args) > 1 {
-      //args = append([]string{binary, "/bin/busybox"}, args[2:]...)
-      args = append([]string{binary, "/bin/bash", "-c"}, args[2:]...)
-      //args = []string{binary, "/bin/busybox", "ls"}
-      fmt.Println(args)
+    //args = append([]string{binary, "/bin/busybox"}, args[2:]...)
+    //args = append([]string{binary, "/bin/bash", "-c"}, args[2:]...)
+    args_0 := args[0]
+    if args_0 == "/bin/sh" {
+       args_0 = "/bin/bash"
     }
+    if args_0[0] != '/' {
+       args_0 = "/bin/" + args_0
+    }
+    args = append([]string{binary, args_0}, args[1:]...)
+    //args = []string{binary, "/bin/busybox", "ls"}
+    fmt.Println(args)
+    //os.Setenv("LD_PRELOAD", "/bin/ld_wrapper.so")
     env := os.Environ()
-    os.Setenv("LD_PRELOAD", "/bin/ld_wrapper.so")
 
     fmt.Println("exec")
 
     execErr := syscall.Exec(binary, args, env)
     if execErr != nil {
+        fmt.Println("Failed")
         panic(execErr)
     }
 
