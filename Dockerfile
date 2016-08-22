@@ -19,7 +19,7 @@ RUN /bin/bash -c /bin/date
 RUN bash -c /bin/date
 RUN /bin/sh -c /bin/date
 RUN sh -c /bin/date
-# RUN apt-get install -y cowsay # -> failing with: Failed to exec method /usr/lib/apt/methods/http
+# RUN apt-get clean && apt-get update && apt-get install -y cowsay # -> failing with: Failed to exec method /usr/lib/apt/methods/http
 CMD ["bash"]
 
 # CLEAN IMAGE
